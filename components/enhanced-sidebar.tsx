@@ -33,7 +33,7 @@ const navigationItems = [
     items: [
       { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard, description: "Main dashboard overview" },
       { name: "Databases", href: "/dashboard/databases", icon: Database, description: "Manage database connections" },
-      { name: "Services", href: "/dashboard/service", icon: Router, description: "Host system overview" },
+      { name: "Services", href: "/dashboard/services", icon: Router, description: "Host system overview" },
     ],
   },
   {
@@ -99,12 +99,12 @@ export function EnhancedSidebar() {
   return (
     <TooltipProvider>
       <motion.div
-        animate={{ width: sidebarCollapsed ? 80 : 280 }}
+        animate={{ width: sidebarCollapsed ? 60 : 250 }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
         className="fixed left-0 top-0 h-full bg-card border-r border-border z-50 flex flex-col"
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-border">
+        <div className="flex items-center justify-between p-2 border-b border-border">
           <AnimatePresence>
             {!sidebarCollapsed && (
               <motion.div
@@ -131,7 +131,7 @@ export function EnhancedSidebar() {
         </div>
 
         {/* Navigation */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-6">
+        <div className="flex-1 overflow-y-auto p-2 space-y-6">
           {navigationItems.map((section) => (
             <div key={section.title}>
               <AnimatePresence>

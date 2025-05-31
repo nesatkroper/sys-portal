@@ -6,6 +6,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model Database {
@@ -28,7 +29,6 @@ model Database {
 model User {
   id          String   @id @default(uuid())
   username    String
-  password    String
   email       String   @unique
   role        String
   status      String   @default("active")
@@ -36,6 +36,7 @@ model User {
   permissions String[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  password    String
 }
 
 model BackupItem {
@@ -90,16 +91,39 @@ model SystemMetrics {
   updatedAt     DateTime @updatedAt
 }
 
+model Service {
+  serviceId    String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  serviceName  String   @unique @default("Nun service") @db.VarChar(50)
+  serviceType  String   @default("default") @db.VarChar(50)
+  schema       String?  @db.VarChar(100)
+  ownerName   String?  @db.VarChar(200)
+  ownerEmail  String?  @db.VarChar(200)
+  ownerPhone  String?  @db.VarChar(20)
+  apiKey      String?   @unique @db.Text
+  apiSecret   String?  @unique @db.Text
+  apiUrl      String?   @unique @db.Text
+  apiVersion  String   @default("v1") @db.VarChar(10)
+  description String?
+  status      Status   @default(active)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+/// @TypeOnly
 model Schema {
   unique_id          String   @id @default(uuid())
   schema_name        String
   size_bytes         String
   num_tables         Int
+  num_columns        Int
   owner              String
   num_connections    Int
+  connection_status  String
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
 }
+
+
 
 enum Status {
   active
