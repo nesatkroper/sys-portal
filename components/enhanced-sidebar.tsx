@@ -25,6 +25,7 @@ import {
   ChevronRight,
   LogOut,
   Router,
+  Cpu,
 } from "lucide-react"
 
 const navigationItems = [
@@ -34,6 +35,7 @@ const navigationItems = [
       { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard, description: "Main dashboard overview" },
       { name: "Databases", href: "/dashboard/databases", icon: Database, description: "Manage database connections" },
       { name: "Services", href: "/dashboard/services", icon: Router, description: "Host system overview" },
+      { name: "System Status", href: "/dashboard/monitoring", icon: Cpu, description: "Real-time system status", },
     ],
   },
   {
