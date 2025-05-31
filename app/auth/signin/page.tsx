@@ -23,7 +23,7 @@ export default function SignInPage() {
     setIsLoading(true)
     setError("")
 
-    // Mock authentication - any email/password works
+
     setTimeout(() => {
       if (email && password) {
         localStorage.setItem(

@@ -1,0 +1,146 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Database {
+  id            String             @id @default(uuid())
+  name          String
+  host          String
+  port          Int
+  username      String
+  status        String             @default("disconnected")
+  lastConnected String?
+  tables        Int?
+  size          String?
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+  backups       BackupItem[]
+  exports       ExportItem[]
+  queryHistory  QueryHistoryItem[]
+}
+
+model User {
+  id          String   @id @default(uuid())
+  username    String
+  password    String
+  email       String   @unique
+  role        String
+  status      String   @default("active")
+  lastLogin   String?
+  permissions String[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model BackupItem {
+  id         String   @id @default(uuid())
+  name       String
+  databaseId String
+  size       String
+  status     String   @default("in-progress")
+  type       String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  database   Database @relation(fields: [databaseId], references: [id])
+}
+
+model ExportItem {
+  id          String   @id @default(uuid())
+  name        String
+  format      String
+  databaseId  String
+  tables      String[]
+  status      String   @default("processing")
+  progress    Float?
+  size        Int?
+  downloadUrl String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  database    Database @relation(fields: [databaseId], references: [id])
+}
+
+model QueryHistoryItem {
+  id           String   @id @default(uuid())
+  query        String
+  databaseId   String
+  executedAt   String
+  duration     Int
+  status       String   @default("success")
+  rowsAffected Int?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  database     Database @relation(fields: [databaseId], references: [id])
+}
+
+model SystemMetrics {
+  id            String   @id @default(uuid())
+  cpu           Float
+  memory        Float
+  disk          Float
+  connections   Int
+  activeQueries Int
+  timestamp     String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Schema {
+  unique_id          String   @id @default(uuid())
+  schema_name        String
+  size_bytes         String
+  num_tables         Int
+  owner              String
+  num_connections    Int
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+enum Status {
+  active
+  inactive
+  pending
+  archived
+}
+
+enum BackupType {
+  full
+  incremental
+  differential
+}
+
+enum ExportFormat {
+  xlsx
+  csv
+  json
+  sql
+}
+
+enum QueryStatus {
+  success
+  failed
+  in_progress
+}
+
+enum UserRole {
+  admin
+  user
+  viewer
+}
+
+enum UserStatus {
+  active
+  inactive
+  banned
+}
+
+enum DatabaseStatus {
+  connected
+  disconnected
+  error
+}

@@ -24,6 +24,7 @@ import {
   ChevronLeft,
   ChevronRight,
   LogOut,
+  Router,
 } from "lucide-react"
 
 const navigationItems = [
@@ -32,6 +33,7 @@ const navigationItems = [
     items: [
       { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard, description: "Main dashboard overview" },
       { name: "Databases", href: "/dashboard/databases", icon: Database, description: "Manage database connections" },
+      { name: "Services", href: "/dashboard/service", icon: Router, description: "Host system overview" },
     ],
   },
   {

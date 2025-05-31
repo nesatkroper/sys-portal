@@ -8,6 +8,7 @@ import { DatabaseOverview } from "@/components/database-overview"
 import { RecentActivity } from "@/components/recent-activity"
 import { AlertsPanel } from "@/components/alerts-panel"
 import { Database, Server, Users, Activity } from "lucide-react"
+import ServerDashboard from "@/components/server-dashboard"
 
 export default function DashboardPage() {
   const [metrics, setMetrics] = useState({
@@ -51,6 +52,7 @@ export default function DashboardPage() {
   }
 
   return (
+    // <ServerDashboard/>
     <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>

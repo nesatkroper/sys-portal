@@ -19,8 +19,9 @@ export function Header() {
   }, [])
 
   return (
-    <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="flex h-14 items-center px-4 gap-4">
+    <header className="container border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+          <HelpDialog open={isHelpOpen} onOpenChange={setIsHelpOpen} />
+      <div className="flex h-14 items-center justify-between px-4 gap-4">
         <SidebarTrigger />
 
         <div className="flex-1" />
@@ -36,8 +37,6 @@ export function Header() {
           </div>
         </div>
       </div>
-
-      <HelpDialog open={isHelpOpen} onOpenChange={setIsHelpOpen} />
     </header>
   )
 }

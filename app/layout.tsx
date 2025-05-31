@@ -8,9 +8,9 @@ import { Toaster } from "@/components/ui/toaster"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "PostgreSQL Admin Dashboard",
+  title: "Nun System Portal",
   description: "Comprehensive PostgreSQL database and host system management",
-    generator: 'v0.dev'
+    generator: ''
 }
 
 export default function RootLayout({

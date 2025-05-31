@@ -6,6 +6,9 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { EnhancedThemeToggle } from "@/components/enhanced-theme-toggle"
+import { useDatabaseStore, useUserStore, useUIStore } from "@/lib/store"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,9 +16,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { EnhancedThemeToggle } from "@/components/enhanced-theme-toggle"
-import { useDatabaseStore, useUserStore, useUIStore } from "@/lib/store"
 import {
   Search,
   Bell,
@@ -67,7 +67,7 @@ export function EnhancedHeader() {
       animate={{ y: 0 }}
       className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
     >
-      <div className="flex h-16 items-center px-4 gap-4">
+      <div className="flex h-16 items-center justify-between px-4 gap-4">
         {/* Left Section */}
         <div className="flex items-center gap-4">
           <Button variant="ghost" size="icon" onClick={toggleSidebar} className="hover:bg-accent/50 transition-colors">
@@ -98,13 +98,12 @@ export function EnhancedHeader() {
                   >
                     <div className="flex items-center gap-3">
                       <div
-                        className={`w-2 h-2 rounded-full ${
-                          db.status === "connected"
-                            ? "bg-green-500"
-                            : db.status === "error"
-                              ? "bg-red-500"
-                              : "bg-gray-400"
-                        }`}
+                        className={`w-2 h-2 rounded-full ${db.status === "connected"
+                          ? "bg-green-500"
+                          : db.status === "error"
+                            ? "bg-red-500"
+                            : "bg-gray-400"
+                          }`}
                       />
                       <div>
                         <div className="font-medium">{db.name}</div>
@@ -123,12 +122,16 @@ export function EnhancedHeader() {
           </DropdownMenu>
         </div>
 
-        {/* Center Section - Search */}
-        <div className="flex-1 max-w-md">
+
+
+
+        {/* Right Section */}
+
+        <div className="flex-1 max-w-96">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search databases, tables, queries... (⌘K)"
+              placeholder="Search databases, tables... (⌘K)"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onFocus={() => setShowSearch(true)}
@@ -141,8 +144,6 @@ export function EnhancedHeader() {
             </div>
           </div>
         </div>
-
-        {/* Right Section */}
         <div className="flex items-center gap-2">
           {/* Quick Actions */}
           <DropdownMenu>
@@ -301,7 +302,7 @@ export function EnhancedHeader() {
               initial={{ opacity: 0, scale: 0.95, y: -20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: -20 }}
-              className="absolute top-20 left-1/2 transform -translate-x-1/2 w-full max-w-2xl mx-auto p-4"
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl mx-auto p-4"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="bg-background border rounded-lg shadow-lg p-4">
@@ -321,6 +322,31 @@ export function EnhancedHeader() {
                 </div>
               </div>
             </motion.div>
+
+            {/* <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: -20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: -20 }}
+              className="absolute top-20 left-1/3 transform -translate-x-1/2 w-full max-w-2xl mx-auto p-4"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="bg-background border rounded-lg shadow-lg p-4">
+                <Input
+                  placeholder="Search everything..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="text-lg border-0 focus:ring-0"
+                  autoFocus
+                />
+                <div className="mt-4 space-y-2">
+                  <div className="text-sm text-muted-foreground">Recent searches</div>
+                  <div className="space-y-1">
+                    <div className="p-2 hover:bg-accent rounded cursor-pointer">SELECT * FROM users</div>
+                    <div className="p-2 hover:bg-accent rounded cursor-pointer">Database performance</div>
+                  </div>
+                </div>
+              </div>
+            </motion.div> */}
           </motion.div>
         )}
       </AnimatePresence>
